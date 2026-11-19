@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Sector Data Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --t1:#f0752f;--t2:#f7a531;--t1a:rgba(240,117,47,.16);--t2a:rgba(247,165,49,.14);--t1s:rgba(240,117,47,.09);
+  --ink:#1d2433;--muted:#667085;--faint:#98a2b3;--line:#e7eaf0;--track:#eef0f5;
+  --sh:0 1px 2px rgba(29,36,51,.04),0 10px 28px -14px rgba(29,36,51,.22);
+  --g-t:#1a8a4c;--g-m:#22a35a;--g-b:#eaf8f0;
+  --r-t:#b8352b;--r-m:#df4b3f;--r-b:#fff0ee;
+  --a-t:#9a6400;--a-m:#e3a21a;--a-b:#fff7e4;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:"Outfit","Segoe UI",system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.45;
+  background:
+    radial-gradient(900px 520px at 8% -6%,var(--t1a),transparent 70%),
+    radial-gradient(800px 480px at 100% 10%,var(--t2a),transparent 70%),
+    radial-gradient(700px 500px at 50% 110%,var(--t1s),transparent 70%),
+    #f5f6fa;
+  background-attachment:fixed;min-height:100vh;
+}
+a{color:inherit}
+.wrap{max-width:1360px;margin:0 auto;padding:0 24px}
+/* Header */
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.72);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:1px solid rgba(231,234,240,.8)}
+.hd{display:flex;align-items:center;gap:16px;padding:12px 24px;max-width:1360px;margin:0 auto;flex-wrap:wrap}
+.badge{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--t1),var(--t2));display:grid;place-items:center;flex:none;box-shadow:0 6px 16px -6px var(--t1)}
+.ttl{min-width:0;flex:1 1 220px}
+.ttl h1{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.ttl .as{font-size:13px;color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:4px;background:var(--track);padding:4px;border-radius:99px}
+.pills button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:500;color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.pills button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(29,36,51,.14)}
+.dots{display:flex;gap:8px}
+.dot{width:22px;height:22px;border-radius:50%;border:0;cursor:pointer;padding:0;outline:2px solid transparent;outline-offset:2px}
+.dot.on{outline-color:var(--ink)}
+.btn{border:0;font:inherit;font-weight:600;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--t1),var(--t2));padding:9px 16px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 6px 16px -8px var(--t1)}
+.btn:focus-visible,.pills button:focus-visible,.dot:focus-visible,.lk:focus-visible,.cp:focus-visible{outline:2px solid var(--t1);outline-offset:2px}
+/* Sections */
+main{padding:28px 0 48px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:30px 0 12px;flex-wrap:wrap}
+.sec-h h2{margin:0;font-size:17px;font-weight:600}
+.sec-h span{font-size:13px;color:var(--muted)}
+/* Top row */
+.top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,2fr);gap:18px}
+.card{background:#fff;border-radius:18px;box-shadow:var(--sh);padding:20px;min-width:0}
+.dial{display:flex;flex-direction:column;align-items:center;text-align:center}
+.dial h3{margin:0 0 4px;font-size:14px;font-weight:600;color:var(--muted);align-self:flex-start}
+.dial svg{width:100%;max-width:300px;height:auto}
+.big{font-size:38px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.sub{color:var(--muted);font-size:13.5px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.chip{font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:5px}
+.ch-g{background:var(--g-b);color:var(--g-t)}
+.ch-r{background:var(--r-b);color:var(--r-t)}
+.ch-a{background:var(--a-b);color:var(--a-t)}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.kpi{border-radius:18px;box-shadow:var(--sh);padding:16px 18px;min-width:0;display:flex;gap:14px;align-items:flex-start}
+.kpi .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.kpi .lb{font-size:13px;color:var(--muted);font-weight:500}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.kpi .v small{font-size:14px;font-weight:600;color:var(--muted)}
+.kpi .ex{font-size:12.5px;color:var(--muted);margin-top:2px}
+.kpi .pl{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.8);color:var(--ink);border:1px solid var(--line)}
+.k1{background:linear-gradient(135deg,#fff 30%,#eef0fd)} .k1 .ic{background:#5b6ee1}
+.k2{background:linear-gradient(135deg,#fff 30%,#f6eefc)} .k2 .ic{background:#a25ad9}
+.k3{background:linear-gradient(135deg,#fff 30%,#e5f6f3)} .k3 .ic{background:#0f9f8f}
+.k4{background:linear-gradient(135deg,#fff 30%,#fdf0e6)} .k4 .ic{background:#c76a2b}
+/* Search */
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 260px;min-width:0;display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;box-shadow:var(--sh);padding:0 14px}
+.search input{border:0;outline:0;font:inherit;padding:11px 0;width:100%;background:transparent;color:var(--ink)}
+.ghost{border:1px solid var(--line);background:#fff;font:inherit;font-size:14px;font-weight:500;padding:9px 14px;border-radius:12px;cursor:pointer;color:var(--ink);display:inline-flex;gap:7px;align-items:center;box-shadow:var(--sh)}
+/* Portal cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,400px),1fr));gap:16px}
+.pc{background:#fff;border-radius:18px;box-shadow:var(--sh);padding:18px 18px 16px 24px;position:relative;overflow:hidden;min-width:0;transition:transform .18s,box-shadow .18s;animation:fade .35s ease both}
+.pc:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(29,36,51,.05),0 16px 34px -14px rgba(29,36,51,.28)}
+.pc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--cat)}
+.pc-top{display:flex;gap:12px;align-items:flex-start}
+.pc-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--catb);color:var(--cat);font-weight:700;font-size:13px}
+.pc h3{margin:0;font-size:16.5px;font-weight:600;line-height:1.25}
+.pc .host{font-size:12.5px;color:var(--faint);overflow-wrap:anywhere}
+.pc .desc{margin:10px 0 0;font-size:13.5px;color:var(--muted)}
+.st{margin-left:auto;flex:none}
+.facts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.fact{background:var(--track);border-radius:10px;padding:6px 10px;font-size:12.5px;color:var(--muted)}
+.fact b{color:var(--ink);font-weight:600}
+.links{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.lrow{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 12px;min-width:0}
+.lrow:hover{background:var(--t1s);border-color:transparent}
+.lk{flex:1;min-width:0;text-decoration:none;display:flex;flex-direction:column}
+.lk .n{font-size:14px;font-weight:500}
+.lk .f{font-size:12px;color:var(--faint)}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;background:var(--catb);color:var(--cat);flex:none;white-space:nowrap}
+.cp{border:0;background:var(--track);border-radius:9px;width:32px;height:32px;display:grid;place-items:center;cursor:pointer;flex:none;color:var(--muted)}
+.cp:hover{background:#e3e6ee;color:var(--ink)}
+.open{flex:none;color:var(--faint)}
+/* Not working */
+details.nw{margin-top:28px;background:#fff;border-radius:18px;box-shadow:var(--sh);overflow:hidden}
+details.nw summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;align-items:center;gap:10px;font-weight:600}
+details.nw summary::-webkit-details-marker{display:none}
+details.nw summary .arr{transition:transform .2s;color:var(--muted)}
+details.nw[open] summary .arr{transform:rotate(90deg)}
+.nwl{padding:0 20px 18px;display:grid;gap:10px}
+.nwr{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--r-b)}
+.nwr .nm{font-weight:600;font-size:14.5px}
+.nwr .nm span{display:block;font-size:12px;color:var(--faint);font-weight:400;word-break:break-all}
+.nwr .why{font-size:13px;color:var(--muted)}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);background:#fff;border-radius:18px;box-shadow:var(--sh)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#fff;box-shadow:0 12px 32px -10px rgba(29,36,51,.35);border-radius:12px;padding:10px 16px;font-size:14px;font-weight:500;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.note{margin-top:14px;font-size:13px;color:var(--muted);background:#fff;border-radius:12px;padding:12px 14px;border-left:4px solid var(--t1);box-shadow:var(--sh)}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:980px){.top{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){
+  .wrap{padding:0 16px}.hd{padding:10px 16px;gap:10px}
+  .btn .w{display:none}.btn{padding:9px 11px}
+  .kpis{grid-template-columns:minmax(0,1fr)}
+  .nwr{grid-template-columns:minmax(0,1fr)}
+  .pills{order:5;width:100%;overflow-x:auto;flex-wrap:nowrap}
+  .big{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div class="badge" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+    <div class="ttl"><h1>Power Sector Data Hub</h1><div class="as">As on 19 Nov 2026 · each portal tested live</div></div>
+    <div class="pills" id="pills" role="tablist" aria-label="Filter by area"></div>
+    <div class="dots" id="dots" aria-label="Colour theme"></div>
+    <button class="btn" id="refresh" title="Reset view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg><span class="w">Refresh</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="top">
+    <div class="card dial">
+      <h3>Portals working today</h3>
+      <svg viewBox="0 0 300 175" aria-hidden="true">
+        <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" style="stop-color:var(--t1)"/><stop offset="1" style="stop-color:var(--t2)"/></linearGradient></defs>
+        <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="#eef0f5" stroke-width="18" stroke-linecap="round"/>
+        <path id="arc" d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" style="transition:stroke-dasharray 1.1s ease"/>
+        <g font-size="11" fill="#98a2b3" font-family="Outfit,sans-serif" text-anchor="middle">
+          <text x="30" y="170">0%</text><text x="65" y="66">25%</text><text x="150" y="22">50%</text><text x="235" y="66">75%</text><text x="270" y="170">100%</text>
+        </g>
+        <g id="needle" style="transform-origin:150px 150px;transform:rotate(-90deg);transition:transform 1.1s cubic-bezier(.3,1.3,.5,1)">
+          <path d="M150 150 L146 148 L150 48 L154 148 Z" fill="#1d2433"/>
+        </g>
+        <circle cx="150" cy="150" r="9" fill="#1d2433"/><circle cx="150" cy="150" r="3.5" fill="#fff"/>
+      </svg>
+      <div class="big" id="bigN">0 of 11</div>
+      <div class="sub">portals open and showing data</div>
+      <div class="chips"><span class="chip ch-g">● 7 Working</span><span class="chip ch-r">● 4 Not working</span></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi k1"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/></svg></div><div><div class="lb">AT&amp;C loss, all India</div><div class="v">15.04<small>%</small></div><div class="ex">ACS–ARR gap ₹0.07 per kWh</div><span class="pl">RDSS dashboard</span></div></div>
+      <div class="kpi k2"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><div><div class="lb">Overdue to generators</div><div class="v">₹21,933 <small>Cr</small></div><div class="ex">Payments past due, as on 18 Nov 2026</div><span class="pl">PRAAPTI</span></div></div>
+      <div class="kpi k3"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M7 8h7a3 3 0 0 1 0 6H8"/></svg></div><div><div class="lb">Real-time market price</div><div class="v">₹2.85 <small>/ kWh</small></div><div class="ex">Average clearing price (₹2,848 / MWh), 19 Nov 2026</div><span class="pl">IEX</span></div></div>
+      <div class="kpi k4"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div><div><div class="lb">Latest daily grid report</div><div class="v">17 Nov <small>2026</small></div><div class="ex">National power supply position, PDF + Excel</div><span class="pl">Grid-India</span></div></div>
+    </div>
+  </section>
+
+  <div class="sec-h"><h2>Working portals – get the data</h2><span id="count"></span></div>
+  <div class="tools">
+    <label class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#98a2b3" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search a portal or a report, e.g. coal, AT&C, RTM"></label>
+    <button class="ghost" id="copyAll"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy all links</button>
+  </div>
+  <div class="grid" id="grid" style="margin-top:14px"></div>
+
+  <details class="nw" id="nw">
+    <summary><span class="arr">▶</span>Not working right now <span class="chip ch-r" style="margin-left:4px">4</span><span style="margin-left:auto;font-size:13px;color:var(--muted);font-weight:400">left out of the list above</span></summary>
+    <div class="nwl" id="nwl"></div>
+  </details>
+
+  <div class="note">Most of these portals do not allow being shown inside another page, so each link opens the portal in a new tab. Report file names change every day; the report pages always carry the latest file.</div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const CATS={
+  dist:{name:"Distribution",c:"#2a78d6",b:"#e8f1fc"},
+  grid:{name:"Grid & generation",c:"#0f9f8f",b:"#e5f6f3"},
+  mkt:{name:"Market & money",c:"#a25ad9",b:"#f6eefc"},
+  pol:{name:"Policy & research",c:"#c76a2b",b:"#fdf0e6"}
+};
+const PORTALS=[
+ {id:"rdss",cat:"dist",ab:"RDSS",name:"Revamped Distribution Sector Scheme (RDSS)",host:"rdss.powermin.gov.in",
+  desc:"DISCOM-wise AT&C loss, ACS–ARR gap, payable and receivable days, sanctioned and released funds, smart metering progress.",
+  facts:[["AT&C loss","15.04%"],["ACS–ARR gap","₹0.07/kWh"],["Sanctioned","₹2,85,370.92 Cr"],["Released","₹1,21,522.72 Cr"]],
+  links:[["RDSS dashboard","State and DISCOM figures","https://rdss.powermin.gov.in/dashboard","Dashboard"],
+         ["Consumer service rating (CSRD)","DISCOM service ratings","https://rdss.powermin.gov.in/csrd","Ratings"],
+         ["RDSS home","Scheme portal and press releases","https://rdss.powermin.gov.in/","Portal"]]},
+ {id:"npp",cat:"grid",ab:"NPP",name:"National Power Portal (CEA)",host:"npp.gov.in",
+  desc:"Installed capacity, daily generation by fuel, transmission progress and daily coal stock at plants. Reports in PDF and Excel.",
+  facts:[["Reports","Daily · Monthly · Fuel"],["Formats","PDF, Excel"]],
+  links:[["Published reports","Daily generation, coal, gas, capacity","https://npp.gov.in/publishedReports","Reports"],
+         ["Capacity dashboard","Installed capacity map","https://npp.gov.in/dashBoard/cp-map-dashboard","Dashboard"],
+         ["Generation & coal dashboard","Daily generation and coal status","https://npp.gov.in/dashBoard/gc-map-dashboard","Dashboard"],
+         ["Transmission dashboard","Lines and substations","https://npp.gov.in/dashBoard/trans-map-dashboard","Dashboard"]]},
+ {id:"grid",cat:"grid",ab:"GI",name:"Grid-India (NLDC) – Daily PSP report",host:"grid-india.in",
+  desc:"Daily all-India power supply position: peak demand met, shortage, state-wise energy, frequency and RE generation.",
+  facts:[["Latest file","17 Nov 2026"],["Formats","PDF, Excel"]],
+  links:[["Daily PSP report page","All daily files, newest first","https://grid-india.in/en/reports/daily-psp-report","Reports"],
+         ["Latest PSP – Excel (17.11.26)","Ready for import into own sheets","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_634.xls","XLS"],
+         ["Latest PSP – PDF (17.11.26)","Printable copy","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_876.pdf","PDF"]]},
+ {id:"praapti",cat:"mkt",ab:"PR",name:"PRAAPTI – Payment tracking",host:"praapti.in",
+  desc:"Generator invoices and DISCOM payments under the LPS Rules 2022: overdue amounts and the DISCOMs with the largest dues.",
+  facts:[["Total overdue","₹21,933 Cr"],["As on","18 Nov 2026"]],
+  links:[["PRAAPTI portal","Overdue by DISCOM and generator","https://praapti.in/","Portal"]]},
+ {id:"iex",cat:"mkt",ab:"IEX",name:"Indian Energy Exchange – Market data",host:"iexindia.com",
+  desc:"15-minute block bids, cleared volume and clearing price for the day-ahead, real-time and green day-ahead markets.",
+  facts:[["RTM avg price","₹2,848.35/MWh"],["Date","19 Nov 2026"]],
+  links:[["Day-ahead market (DAM)","Snapshot by 15-minute block","https://www.iexindia.com/market-data/day-ahead-market/market-snapshot","DAM"],
+         ["Real-time market (RTM)","Snapshot by 15-minute block","https://www.iexindia.com/market-data/real-time-market/market-snapshot","RTM"],
+         ["Green day-ahead market (GDAM)","Hydro, wind, solar break-up","https://www.iexindia.com/market-data/green-day-ahead-market/market-snapshot","GDAM"]]},
+ {id:"iced",cat:"pol",ab:"ICED",name:"NITI Aayog – India Climate & Energy Dashboard",host:"iced.niti.gov.in",
+  desc:"Time series on energy supply, consumption by sector, capacity and emissions, with Excel download on each chart.",
+  facts:[["Download","Excel per chart"]],
+  links:[["ICED home","Charts with Excel download","https://iced.niti.gov.in/","Portal"]]},
+ {id:"prayas",cat:"pol",ab:"PEG",name:"Prayas (Energy Group) – Data portals",host:"energy.prayaspune.org",
+  desc:"Curated public data on renewable energy, transmission, tariffs and power purchase, with analysis and regulatory submissions.",
+  facts:[["Data portals","RE · Transmission"]],
+  links:[["Renewable energy data portal","State-wise RE figures","https://energy.prayaspune.org/renewable-energy-data-portal","RE"],
+         ["India Transmission Portal","Transmission capacity and projects","https://indiatransmission.org/","Transmission"],
+         ["Prayas Energy home","Reports and submissions","https://energy.prayaspune.org/","Portal"]]}
+];
+const DOWN=[
+ ["National Feeder Monitoring System (NFMS)","nfms.powermin.gov.in","Asks for sign-in; public page shows only blank figures (“--”)."],
+ ["National Smart Grid Mission (NSGM)","nsgm.gov.in","Site could not be reached."],
+ ["MERIT India","meritindia.in","Server closes the connection."],
+ ["PUShP – Surplus power portal","pushp.powermin.gov.in","This address does not exist. Open it from the Apps menu on npp.gov.in."]
+];
+const THEMES={Sunrise:["#f0752f","#f7a531"],Sky:["#2f7df6","#22c1dc"],Mint:["#0a9b85","#4eb068"],Lavender:["#7a65c2","#e27aab"]};
+const KEY="powerhub-theme";
+let cat="all",q="";
+
+function hexA(h,a){const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+function setTheme(name){
+  const [a,b]=THEMES[name]||THEMES.Sunrise,r=document.documentElement.style;
+  r.setProperty("--t1",a);r.setProperty("--t2",b);
+  r.setProperty("--t1a",hexA(a,.16));r.setProperty("--t2a",hexA(b,.14));r.setProperty("--t1s",hexA(a,.09));
+  document.querySelectorAll(".dot").forEach(d=>d.classList.toggle("on",d.dataset.t===name));
+  try{localStorage.setItem(KEY,name)}catch(e){}
+}
+function initDots(){
+  const box=document.getElementById("dots");
+  for(const [n,[a,b]] of Object.entries(THEMES)){
+    const d=document.createElement("button");d.className="dot";d.dataset.t=n;d.title=n;d.setAttribute("aria-label",n+" colours");
+    d.style.background=`linear-gradient(135deg,${a},${b})`;d.onclick=()=>setTheme(n);box.appendChild(d);
+  }
+  let s="Sunrise";try{s=localStorage.getItem(KEY)||s}catch(e){}
+  setTheme(THEMES[s]?s:"Sunrise");
+}
+function initPills(){
+  const box=document.getElementById("pills");
+  const list=[["all","All"],...Object.entries(CATS).map(([k,v])=>[k,v.name])];
+  box.innerHTML=list.map(([k,n])=>`<button data-c="${k}" class="${k===cat?"on":""}">${n}</button>`).join("");
+  box.onclick=e=>{const b=e.target.closest("button");if(!b)return;cat=b.dataset.c;box.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));render()};
+}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const copyIc='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+const openIc='<svg class="open" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+function match(p){
+  if(cat!=="all"&&p.cat!==cat)return false;
+  if(!q)return true;
+  const t=(p.name+" "+p.host+" "+p.desc+" "+p.links.map(l=>l.join(" ")).join(" ")+" "+p.facts.flat().join(" ")).toLowerCase();
+  return q.split(/\s+/).every(w=>t.includes(w));
+}
+function render(){
+  const list=PORTALS.filter(match),g=document.getElementById("grid");
+  document.getElementById("count").textContent=`${list.length} of ${PORTALS.length} working portals shown`;
+  if(!list.length){g.innerHTML=`<div class="empty" style="grid-column:1/-1">Nothing matches “${esc(q)}”. Try another word or pick All.</div>`;return}
+  g.innerHTML=list.map((p,i)=>{const c=CATS[p.cat];return `
+  <article class="pc" style="--cat:${c.c};--catb:${c.b};animation-delay:${i*40}ms">
+    <div class="pc-top"><div class="pc-ic">${p.ab}</div>
+      <div style="min-width:0"><h3>${esc(p.name)}</h3><div class="host">${p.host} · ${c.name}</div></div>
+      <span class="chip ch-g st">● Working</span></div>
+    <p class="desc">${esc(p.desc)}</p>
+    <div class="facts">${p.facts.map(([k,v])=>`<span class="fact">${k}: <b>${v}</b></span>`).join("")}</div>
+    <div class="links">${p.links.map(([n,f,u,t])=>`
+      <div class="lrow"><a class="lk" href="${u}" target="_blank" rel="noopener"><span class="n">${esc(n)}</span><span class="f">${esc(f)}</span></a>
+      <span class="tag">${t}</span><a href="${u}" target="_blank" rel="noopener" aria-label="Open ${esc(n)}">${openIc}</a>
+      <button class="cp" data-u="${u}" title="Copy link" aria-label="Copy link">${copyIc}</button></div>`).join("")}</div>
+  </article>`}).join("");
+}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),1800)}
+async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){toast("Copy not allowed here – open the link instead")}}
+function dial(){
+  const pct=7/11*100,arc=document.getElementById("arc"),nd=document.getElementById("needle"),big=document.getElementById("bigN");
+  requestAnimationFrame(()=>{arc.style.strokeDasharray=`${pct} 100`;nd.style.transform=`rotate(${-90+pct*1.8}deg)`});
+  const red=matchMedia("(prefers-reduced-motion:reduce)").matches;let n=0;
+  if(red){big.textContent="7 of 11";return}
+  const iv=setInterval(()=>{n++;big.textContent=`${n} of 11`;if(n>=7)clearInterval(iv)},110);
+}
+document.getElementById("nwl").innerHTML=DOWN.map(([n,h,w])=>`<div class="nwr"><div class="nm">${n}<span>${h}</span></div><div class="why">${w}</div><span class="chip ch-r">● Not working</span></div>`).join("");
+document.getElementById("grid").addEventListener("click",e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.u,"Link copied")});
+document.getElementById("copyAll").onclick=()=>copy(PORTALS.map(p=>p.name+"\n"+p.links.map(l=>"  "+l[0]+": "+l[2]).join("\n")).join("\n\n"),"All working links copied");
+document.getElementById("q").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();render()});
+document.getElementById("refresh").onclick=()=>{cat="all";q="";document.getElementById("q").value="";initPills();render();
+  const arc=document.getElementById("arc"),nd=document.getElementById("needle");arc.style.strokeDasharray="0 100";nd.style.transform="rotate(-90deg)";setTimeout(dial,250)};
+initDots();initPills();render();dial();
+</script>
+</body>
+</html>
