@@ -6,271 +6,203 @@
 <title>Power Sector Data Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0e2a47;--navy2:#163b63;--ink:#14213d;--muted:#5b6678;--faint:#8a94a6;
-  --line:#e3e7ee;--bg:#f4f6f9;--card:#fff;--hover:#f0f5fb;--accent:#e8a33d;
-  --ok:#16803c;--okb:#e7f6ec;--bad:#b4342a;--badb:#fdecea;
+  --bg:#fafbfc;--card:#fff;--line:#e8ebf0;--line2:#d7dde6;
+  --ink:#1f2937;--muted:#6b7280;--faint:#9ca3af;
+  --accent:#2563eb;--accentT:#eff4ff;--ok:#16a34a;--bad:#dc2626;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.45}
+body{font-family:Inter,"Segoe UI",Roboto,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 
-/* Top band */
-.band{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#fff;padding:22px 0 64px;position:relative}
-.band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--accent),#f3c46b 40%,transparent)}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:38px;height:38px;border-radius:9px;background:var(--accent);display:grid;place-items:center;flex:none}
-.brand h1{margin:0;font-size:20px;font-weight:600;letter-spacing:.01em}
-.brand p{margin:0;font-size:13px;color:#b9c8da}
-.brand .chk{margin-left:auto;font-size:12.5px;color:#b9c8da;display:flex;align-items:center;gap:6px;white-space:nowrap}
-.brand .chk i{width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block}
-.hero{text-align:center;margin-top:30px}
-.hero h2{margin:0 0 6px;font-size:26px;font-weight:600}
-.hero p{margin:0 0 20px;color:#c9d5e3;font-size:14.5px}
-.search{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:0 14px;box-shadow:0 10px 30px -10px rgba(0,0,0,.45)}
-.search input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;padding:14px 0;color:var(--ink);background:transparent}
-.search kbd{font:inherit;font-size:12px;color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+/* Header */
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.hd{display:flex;align-items:center;gap:14px;height:60px}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--accentT);display:grid;place-items:center;flex:none}
+.hd h1{margin:0;font-size:16px;font-weight:600;white-space:nowrap}
+.search{flex:1;max-width:520px;margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:0 12px}
+.search:focus-within{border-color:var(--accent);background:#fff}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;padding:9px 0;color:var(--ink)}
+.search kbd{font:inherit;font-size:11px;color:var(--faint);border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.note{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.note i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
 
-/* Quick access strip */
-.quick{margin-top:-40px;position:relative;z-index:2;background:#fff;border-radius:12px;border:1px solid var(--line);box-shadow:0 8px 24px -14px rgba(14,42,71,.35);padding:14px 16px}
-.quick h3{margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:8px}
-.qa{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid var(--line);min-width:0}
-.qa:hover{background:var(--hover);border-color:#c9d8ea}
-.qa .qi{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;flex:none;color:#fff}
-.qa b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.qa span{display:block;font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Filters */
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:22px 0 18px}
+.chip{border:1px solid var(--line);background:#fff;font:inherit;font-size:13.5px;color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--line2);color:var(--ink)}
+.chip.on{background:var(--accentT);border-color:#c9dafb;color:var(--accent);font-weight:500}
+.chip .n{color:var(--faint);margin-left:4px}
+.chip.on .n{color:#7aa0ef}
+.copyall{margin-left:auto;border:0;background:none;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;display:inline-flex;gap:6px;align-items:center;padding:6px 4px}
+.copyall:hover{color:var(--accent)}
 
-/* Layout */
-.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;margin:28px auto 40px}
-nav.side{position:sticky;top:16px;align-self:start}
-nav.side h4{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600}
-nav.side button{display:flex;width:100%;align-items:center;gap:10px;border:0;background:transparent;font:inherit;font-size:14.5px;color:var(--muted);padding:9px 10px;border-radius:8px;cursor:pointer;text-align:left}
-nav.side button .sw{width:10px;height:10px;border-radius:3px;flex:none}
-nav.side button .n{margin-left:auto;font-size:12px;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:99px;padding:0 8px}
-nav.side button:hover{background:#fff}
-nav.side button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--navy)}
-.legend{margin-top:18px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
-.legend div{display:flex;gap:8px;align-items:center;margin-bottom:6px}
-.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+/* Quick links */
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.quick span.l{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;align-self:center;margin-right:4px}
+.qa{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid var(--line)}
+.qa:hover{border-color:var(--accent);color:var(--accent)}
+.qa svg{color:var(--faint)}
 
-/* Groups and portal rows */
-.group{margin-bottom:26px}
-.ghead{display:flex;align-items:center;gap:10px;margin:0 0 10px}
-.ghead .sw{width:12px;height:12px;border-radius:3px}
-.ghead h3{margin:0;font-size:16px;font-weight:600}
-.ghead span{font-size:13px;color:var(--faint)}
-.portal{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
-.portal:hover{border-color:#c9d8ea;box-shadow:0 6px 18px -12px rgba(14,42,71,.35)}
-.ptop{display:flex;gap:14px;align-items:flex-start;padding:16px 18px 12px}
-.mono{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none;letter-spacing:.02em}
-.pinfo{min-width:0;flex:1}
-.pinfo h4{margin:0;font-size:16.5px;font-weight:600;line-height:1.3}
-.pinfo .meta{font-size:12.5px;color:var(--faint);margin-top:1px;overflow-wrap:anywhere}
-.pinfo p{margin:6px 0 0;font-size:14px;color:var(--muted)}
-.status{font-size:12px;font-weight:600;color:var(--ok);background:var(--okb);padding:3px 9px;border-radius:99px;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;flex:none}
-.status i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
-.go{flex:none;align-self:center;font-size:13.5px;font-weight:600;color:#fff;background:var(--navy);border-radius:8px;padding:8px 14px;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
-.go:hover{background:var(--navy2)}
-.today{margin:0 18px;padding:7px 10px;font-size:13px;color:var(--muted);background:#fbf6ec;border-left:3px solid var(--accent);border-radius:4px}
-.today b{color:var(--ink);font-weight:600}
-.dl{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 16px}
-.dlink{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:6px 6px 6px 10px;font-size:13.5px;background:#fff;max-width:100%}
-.dlink:hover{background:var(--hover);border-color:#c9d8ea}
-.dlink a{display:inline-flex;align-items:center;gap:8px;min-width:0}
-.dlink a span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fmt{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:4px;background:#eef2f7;color:var(--muted);flex:none}
-.fmt.xls{background:#e6f4ea;color:#1d6b3a}.fmt.pdf{background:#fdecea;color:#a3322a}.fmt.web{background:#e8f0fb;color:#24508a}
-.cp{border:0;background:transparent;color:var(--faint);width:26px;height:26px;border-radius:6px;cursor:pointer;display:grid;place-items:center;flex:none}
-.cp:hover{background:#eef2f7;color:var(--ink)}
+/* Groups */
+.group{margin-bottom:28px}
+.group h2{margin:0 0 10px;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;min-width:0;transition:border-color .15s}
+.card:hover{border-color:var(--line2)}
+.ct{display:flex;align-items:flex-start;gap:12px}
+.mono{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;font-size:11px;font-weight:600;flex:none;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.ttl{min-width:0;flex:1}
+.ttl a.name{font-size:15px;font-weight:600;line-height:1.3;display:block}
+.ttl a.name:hover{color:var(--accent)}
+.ttl .host{font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:6px;margin-top:2px}
+.ttl .host i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
+.area{margin-left:auto;font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:0 8px;white-space:nowrap}
+.desc{font-size:13.5px;color:var(--muted);margin:10px 0 12px}
+.links{margin-top:auto;border-top:1px solid var(--line);padding-top:8px;display:flex;flex-direction:column}
+.lr{display:flex;align-items:center;gap:8px;padding:5px 6px;margin:0 -6px;border-radius:7px}
+.lr:hover{background:var(--bg)}
+.lr a{flex:1;min-width:0;display:flex;align-items:center;gap:8px;font-size:13.5px}
+.lr a span.t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lr a:hover span.t{color:var(--accent)}
+.fmt{font-size:10px;font-weight:600;letter-spacing:.03em;width:30px;text-align:center;padding:1px 0;border-radius:4px;flex:none;color:var(--muted);background:#f1f3f6}
+.fmt.xls{color:#15803d;background:#ecf8f0}.fmt.pdf{color:#b91c1c;background:#fdf0f0}
+.cp{border:0;background:none;color:var(--faint);width:24px;height:24px;border-radius:6px;cursor:pointer;display:grid;place-items:center;flex:none;opacity:0;transition:opacity .15s}
+.lr:hover .cp,.cp:focus-visible{opacity:1}
+.cp:hover{color:var(--accent);background:var(--accentT)}
+@media (hover:none){.cp{opacity:1}}
 
-/* Unavailable */
-.down{background:#fff;border:1px dashed #d9dee7;border-radius:12px;padding:6px 18px}
-.drow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,2fr) auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.drow:last-child{border-bottom:0}
-.drow b{font-size:14.5px;font-weight:600;display:block}
-.drow small{color:var(--faint);font-size:12.5px;overflow-wrap:anywhere}
-.drow .why{font-size:13.5px;color:var(--muted)}
-.drow .st{font-size:12px;font-weight:600;color:var(--bad);background:var(--badb);padding:3px 9px;border-radius:99px;white-space:nowrap}
+/* Not working */
+details{border-top:1px solid var(--line);margin-top:8px;padding:14px 0 30px}
+summary{cursor:pointer;font-size:13.5px;color:var(--muted);list-style:none;display:flex;align-items:center;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .a{transition:transform .15s;font-size:10px}
+details[open] summary .a{transform:rotate(90deg)}
+.dl{margin-top:12px;display:grid;gap:6px}
+.dr{display:flex;gap:10px;align-items:baseline;font-size:13.5px;flex-wrap:wrap}
+.dr i{width:6px;height:6px;border-radius:50%;background:var(--bad);display:inline-block;flex:none;transform:translateY(-1px)}
+.dr b{font-weight:500}
+.dr span{color:var(--faint)}
+.dr em{font-style:normal;color:var(--muted)}
 
-.empty{background:#fff;border:1px solid var(--line);border-radius:12px;padding:36px;text-align:center;color:var(--muted)}
-footer{border-top:1px solid var(--line);background:#fff;padding:18px 0;font-size:13px;color:var(--muted)}
-footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
-.btn2{border:1px solid var(--line);background:#fff;font:inherit;font-size:13px;font-weight:600;color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.btn2:hover{background:var(--hover)}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);background:var(--navy);color:#fff;border-radius:8px;padding:9px 14px;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:9}
+.empty{padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line2);border-radius:12px;background:#fff}
+mark{background:#fff3c4;color:inherit;border-radius:2px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,12px);background:var(--ink);color:#fff;font-size:13.5px;padding:8px 14px;border-radius:8px;opacity:0;transition:.2s;pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-mark{background:#fde9b8;color:inherit;border-radius:2px}
 
-@media (max-width:860px){
-  .layout{grid-template-columns:minmax(0,1fr);gap:16px}
-  nav.side{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
-  nav.side h4,.legend{display:none}
-  nav.side button{width:auto;white-space:nowrap;background:#fff;border:1px solid var(--line)}
-  nav.side button.on{box-shadow:none;background:var(--navy);color:#fff;border-color:var(--navy)}
-  nav.side button.on .n{background:transparent;color:#cbd6e4;border-color:#3b5a7d}
-}
-@media (max-width:600px){
+@media (max-width:720px){
   .wrap{padding:0 16px}
-  .brand .chk{display:none}
-  .hero h2{font-size:21px}
-  .ptop{flex-wrap:wrap}
-  .go{width:100%;justify-content:center;order:5}
-  .pinfo{flex:1 1 calc(100% - 60px)}
-  .status{order:4;margin-left:60px}
-  .drow{grid-template-columns:minmax(0,1fr)}
+  .hd{flex-wrap:wrap;height:auto;padding:10px 0;gap:10px}
+  .search{order:3;flex-basis:100%;max-width:none;margin:0}
+  .note{display:none}
+  .bar{flex-wrap:nowrap;overflow-x:auto;margin:16px -16px 14px;padding:0 16px}
+  .copyall{display:none}
+  .quick{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 22px;padding:0 16px 2px}
+  .qa{white-space:nowrap}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="band">
-  <div class="wrap">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="#0e2a47"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
-      <div><h1>Power Sector Data Hub</h1><p>Indian power sector dashboards and reports in one place</p></div>
-      <div class="chk"><i></i>Links checked 19 Nov 2026</div>
-    </div>
-    <div class="hero">
-      <h2>Find any power sector dashboard</h2>
-      <p>7 working portals · distribution, grid, market, policy</p>
-      <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a94a6" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Search portals and reports – e.g. coal, AT&C, RTM, PSP" aria-label="Search"><kbd>/</kbd></label>
-    </div>
+<header>
+  <div class="wrap hd">
+    <div class="logo" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+    <h1>Power Sector Data Hub</h1>
+    <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search portals and reports" aria-label="Search"><kbd>/</kbd></label>
+    <span class="note"><i></i>Checked 19 Nov 2026</span>
   </div>
-</div>
+</header>
 
-<div class="wrap">
-  <section class="quick">
-    <h3>Quick access</h3>
-    <div class="qgrid" id="quick"></div>
-  </section>
-
-  <div class="layout">
-    <nav class="side" id="side" aria-label="Areas"></nav>
-    <main id="main"></main>
-  </div>
-</div>
-
-<footer><div class="wrap">
-  <span>Every link opens the official portal in a new tab. Most portals cannot be shown inside another page.</span>
-  <button class="btn2" id="copyAll"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy all links</button>
-</div></footer>
+<main class="wrap">
+  <div class="bar" id="bar"></div>
+  <div class="quick" id="quick"></div>
+  <div id="list"></div>
+  <details id="down"></details>
+</main>
 <div class="toast" id="toast"></div>
 
 <script>
-const AREAS={
-  dist:{name:"Distribution",c:"#2a6fc9",b:"#e6effa"},
-  grid:{name:"Grid & generation",c:"#0f8f7f",b:"#e3f4f1"},
-  mkt:{name:"Market & payments",c:"#8a4fc4",b:"#f2eafa"},
-  pol:{name:"Policy & research",c:"#b9651f",b:"#fbefe3"}
-};
+const AREAS={dist:"Distribution",grid:"Grid & generation",mkt:"Market & payments",pol:"Policy & research"};
 const PORTALS=[
- {cat:"dist",ab:"RDSS",name:"Revamped Distribution Sector Scheme (RDSS)",host:"rdss.powermin.gov.in",by:"Ministry of Power",
-  desc:"DISCOM-wise AT&C loss, ACS–ARR gap, payable and receivable days, sanctioned and released funds, smart metering progress.",
-  today:"All-India AT&C loss <b>15.04%</b> · ACS–ARR gap <b>₹0.07/kWh</b> · Released <b>₹1,21,522.72 Cr</b> of ₹2,85,370.92 Cr",
+ {cat:"dist",ab:"RDSS",name:"RDSS – Revamped Distribution Sector Scheme",host:"rdss.powermin.gov.in",
+  desc:"AT&C loss, ACS–ARR gap, funds sanctioned and released, smart metering – DISCOM-wise.",
   main:"https://rdss.powermin.gov.in/dashboard",
   links:[["RDSS dashboard","https://rdss.powermin.gov.in/dashboard","WEB"],["Consumer service rating","https://rdss.powermin.gov.in/csrd","WEB"],["Scheme home & press releases","https://rdss.powermin.gov.in/","WEB"]]},
- {cat:"grid",ab:"NPP",name:"National Power Portal",host:"npp.gov.in",by:"Central Electricity Authority",
-  desc:"Installed capacity, daily generation by fuel, transmission progress and daily coal stock at power plants.",
+ {cat:"grid",ab:"NPP",name:"National Power Portal (CEA)",host:"npp.gov.in",
+  desc:"Installed capacity, daily generation by fuel, transmission and daily coal stock.",
   main:"https://npp.gov.in/publishedReports",
-  links:[["Published reports (daily, monthly, fuel)","https://npp.gov.in/publishedReports","XLS"],["Capacity dashboard","https://npp.gov.in/dashBoard/cp-map-dashboard","WEB"],["Generation & coal dashboard","https://npp.gov.in/dashBoard/gc-map-dashboard","WEB"],["Transmission dashboard","https://npp.gov.in/dashBoard/trans-map-dashboard","WEB"]]},
- {cat:"grid",ab:"NLDC",name:"Grid-India – Daily Power Supply Position",host:"grid-india.in",by:"Grid Controller of India (NLDC)",
-  desc:"Daily all-India peak demand met, shortage, state-wise energy, frequency and renewable generation.",
-  today:"Latest report: <b>17 Nov 2026</b>, in PDF and Excel",
+  links:[["Published reports – daily, monthly, fuel","https://npp.gov.in/publishedReports","XLS"],["Capacity dashboard","https://npp.gov.in/dashBoard/cp-map-dashboard","WEB"],["Generation & coal dashboard","https://npp.gov.in/dashBoard/gc-map-dashboard","WEB"],["Transmission dashboard","https://npp.gov.in/dashBoard/trans-map-dashboard","WEB"]]},
+ {cat:"grid",ab:"NLDC",name:"Grid-India – Daily Power Supply Position",host:"grid-india.in",
+  desc:"Daily all-India peak demand met, shortage, state-wise energy, frequency and RE generation.",
   main:"https://grid-india.in/en/reports/daily-psp-report",
-  links:[["All daily PSP reports","https://grid-india.in/en/reports/daily-psp-report","WEB"],["PSP 17.11.2026 – Excel","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_634.xls","XLS"],["PSP 17.11.2026 – PDF","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_876.pdf","PDF"]]},
- {cat:"mkt",ab:"PRA",name:"PRAAPTI – Power Procurement Payment Tracking",host:"praapti.in",by:"Ministry of Power",
-  desc:"Generator invoices and DISCOM payments under the LPS Rules 2022, with overdue amounts by DISCOM.",
-  today:"Total overdue <b>₹21,933 Cr</b> as on 18 Nov 2026",
+  links:[["All daily PSP reports","https://grid-india.in/en/reports/daily-psp-report","WEB"],["PSP 17 Nov 2026","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_634.xls","XLS"],["PSP 17 Nov 2026","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_876.pdf","PDF"]]},
+ {cat:"mkt",ab:"PRA",name:"PRAAPTI – Payment Tracking",host:"praapti.in",
+  desc:"Generator invoices and DISCOM payments under LPS Rules 2022; overdue by DISCOM.",
   main:"https://praapti.in/",
   links:[["PRAAPTI portal","https://praapti.in/","WEB"]]},
- {cat:"mkt",ab:"IEX",name:"Indian Energy Exchange – Market Data",host:"iexindia.com",by:"IEX",
-  desc:"15-minute block bids, cleared volumes and clearing prices for day-ahead, real-time and green markets.",
-  today:"Real-time market average price <b>₹2,848.35/MWh</b>",
+ {cat:"mkt",ab:"IEX",name:"IEX – Market Data",host:"iexindia.com",
+  desc:"15-minute bids, cleared volume and clearing price for DAM, RTM and GDAM.",
   main:"https://www.iexindia.com/market-data/real-time-market/market-snapshot",
   links:[["Day-ahead market (DAM)","https://www.iexindia.com/market-data/day-ahead-market/market-snapshot","WEB"],["Real-time market (RTM)","https://www.iexindia.com/market-data/real-time-market/market-snapshot","WEB"],["Green day-ahead market (GDAM)","https://www.iexindia.com/market-data/green-day-ahead-market/market-snapshot","WEB"]]},
- {cat:"pol",ab:"ICED",name:"India Climate & Energy Dashboard",host:"iced.niti.gov.in",by:"NITI Aayog",
-  desc:"Time series on energy supply, consumption by sector, capacity and emissions, with Excel download on each chart.",
+ {cat:"pol",ab:"ICED",name:"NITI Aayog – India Climate & Energy Dashboard",host:"iced.niti.gov.in",
+  desc:"Energy supply, consumption, capacity and emissions; Excel download on each chart.",
   main:"https://iced.niti.gov.in/",
   links:[["ICED home","https://iced.niti.gov.in/","XLS"]]},
- {cat:"pol",ab:"PEG",name:"Prayas (Energy Group) – Data Portals",host:"energy.prayaspune.org",by:"Prayas Energy Group",
-  desc:"Curated public data on renewable energy and transmission, with analysis and regulatory submissions.",
+ {cat:"pol",ab:"PEG",name:"Prayas Energy – Data Portals",host:"energy.prayaspune.org",
+  desc:"Public data on renewable energy and transmission, with analysis.",
   main:"https://energy.prayaspune.org/",
   links:[["Renewable energy data portal","https://energy.prayaspune.org/renewable-energy-data-portal","WEB"],["India Transmission Portal","https://indiatransmission.org/","WEB"],["Prayas Energy home","https://energy.prayaspune.org/","WEB"]]}
 ];
-const QUICK=[
- ["RDSS dashboard","AT&C, ACS–ARR","https://rdss.powermin.gov.in/dashboard","dist","RDSS"],
- ["Latest PSP (Excel)","17 Nov 2026","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_634.xls","grid","XLS"],
- ["NPP daily reports","Generation, coal","https://npp.gov.in/publishedReports","grid","NPP"],
- ["IEX real-time prices","RTM snapshot","https://www.iexindia.com/market-data/real-time-market/market-snapshot","mkt","IEX"],
- ["PRAAPTI overdue","DISCOM dues","https://praapti.in/","mkt","PRA"]
-];
-const DOWN=[
- ["National Feeder Monitoring System (NFMS)","nfms.powermin.gov.in","Asks for sign-in; public page shows only blank figures."],
- ["National Smart Grid Mission (NSGM)","nsgm.gov.in","Site could not be reached."],
- ["MERIT India","meritindia.in","Server closes the connection."],
- ["PUShP – Surplus power portal","pushp.powermin.gov.in","Address does not exist. Open it from the Apps menu on npp.gov.in."]
-];
+const QUICK=[["RDSS dashboard","https://rdss.powermin.gov.in/dashboard"],["Latest PSP (Excel)","https://webcdn.grid-india.in/files/grdw/2026/11/17.11.26_NLDC_PSP_634.xls"],["NPP daily reports","https://npp.gov.in/publishedReports"],["IEX real-time prices","https://www.iexindia.com/market-data/real-time-market/market-snapshot"],["PRAAPTI overdue","https://praapti.in/"]];
+const DOWN=[["NFMS","nfms.powermin.gov.in","asks for sign-in; figures blank"],["NSGM","nsgm.gov.in","site not reachable"],["MERIT India","meritindia.in","server closes the connection"],["PUShP","pushp.powermin.gov.in","address does not exist – open from the Apps menu on npp.gov.in"]];
+
 let area="all",q="";
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const hl=s=>{s=esc(s);if(!q)return s;q.split(/\s+/).filter(Boolean).forEach(w=>{s=s.replace(new RegExp("("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>")});return s};
-const cpIc='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
-const arIc='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+const cpIc='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+const arIc='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+const txt=p=>(p.name+" "+p.host+" "+p.desc+" "+AREAS[p.cat]+" "+p.links.map(l=>l[0]+" "+l[2]).join(" ")).toLowerCase();
+const ok=p=>(area==="all"||p.cat===area)&&(!q||q.split(/\s+/).every(w=>txt(p).includes(w)));
 
-function textOf(p){return (p.name+" "+p.host+" "+p.by+" "+p.desc+" "+(p.today||"")+" "+p.links.map(l=>l[0]).join(" ")+" "+AREAS[p.cat].name).toLowerCase().replace(/<[^>]+>/g,"")}
-function matches(p){if(area!=="all"&&area!=="down"&&p.cat!==area)return false;return !q||q.split(/\s+/).every(w=>textOf(p).includes(w))}
-
-function renderQuick(){
-  document.getElementById("quick").innerHTML=QUICK.map(([n,s,u,c,ab])=>`<a class="qa" href="${u}" target="_blank" rel="noopener"><span class="qi" style="background:${AREAS[c].c}">${ab}</span><span style="min-width:0"><b>${n}</b><span>${s}</span></span></a>`).join("");
+function bar(){
+  const items=[["all","All",PORTALS.length],...Object.entries(AREAS).map(([k,n])=>[k,n,PORTALS.filter(p=>p.cat===k).length])];
+  document.getElementById("bar").innerHTML=items.map(([k,n,c])=>`<button class="chip ${k===area?"on":""}" data-a="${k}">${n}<span class="n">${c}</span></button>`).join("")+
+    `<button class="copyall" id="copyAll">${cpIc} Copy all links</button>`;
 }
-function renderSide(){
-  const cnt=k=>k==="all"?PORTALS.length:k==="down"?DOWN.length:PORTALS.filter(p=>p.cat===k).length;
-  const items=[["all","All portals","#0e2a47"],...Object.entries(AREAS).map(([k,v])=>[k,v.name,v.c]),["down","Not working","#b4342a"]];
-  document.getElementById("side").innerHTML=`<h4>Browse by area</h4>`+items.map(([k,n,c])=>`<button data-a="${k}" class="${k===area?"on":""}"><span class="sw" style="background:${c}"></span>${n}<span class="n">${cnt(k)}</span></button>`).join("")+
-   `<div class="legend"><div><i style="background:#16803c"></i>Working at last check</div><div><i style="background:#b4342a"></i>Not working at last check</div></div>`;
-}
-function portalHTML(p){
-  const a=AREAS[p.cat];
-  return `<article class="portal">
-   <div class="ptop"><div class="mono" style="background:${a.b};color:${a.c}">${p.ab}</div>
-    <div class="pinfo"><h4>${hl(p.name)}</h4><div class="meta">${p.by} · ${p.host}</div><p>${hl(p.desc)}</p></div>
-    <span class="status"><i></i>Working</span>
-    <a class="go" href="${p.main}" target="_blank" rel="noopener">Open portal ${arIc}</a></div>
-   ${p.today?`<div class="today">On 19 Nov 2026: ${p.today}</div>`:""}
-   <div class="dl">${p.links.map(([n,u,f])=>`<span class="dlink"><a href="${u}" target="_blank" rel="noopener"><span class="fmt ${f.toLowerCase()}">${f}</span><span>${hl(n)}</span></a><button class="cp" data-u="${u}" title="Copy link" aria-label="Copy link to ${esc(n)}">${cpIc}</button></span>`).join("")}</div>
-  </article>`;
-}
-function downHTML(){
-  return `<section class="group"><div class="ghead"><span class="sw" style="background:#b4342a"></span><h3>Not working right now</h3><span>${DOWN.length} portals, kept out of the list</span></div>
-   <div class="down">${DOWN.map(([n,h,w])=>`<div class="drow"><div><b>${n}</b><small>${h}</small></div><div class="why">${w}</div><span class="st">Not working</span></div>`).join("")}</div></section>`;
-}
-function render(){
-  const m=document.getElementById("main");let html="";
-  if(area==="down"){m.innerHTML=downHTML();return}
-  for(const [k,a] of Object.entries(AREAS)){
-    if(area!=="all"&&area!==k)continue;
-    const list=PORTALS.filter(p=>p.cat===k&&matches(p));if(!list.length)continue;
-    html+=`<section class="group"><div class="ghead"><span class="sw" style="background:${a.c}"></span><h3>${a.name}</h3><span>${list.length} portal${list.length>1?"s":""}</span></div>${list.map(portalHTML).join("")}</section>`;
+function list(){
+  let h="";
+  const ps=PORTALS.filter(ok);
+  if(ps.length){
+    h=`<div class="grid">${ps.map(p=>`
+      <article class="card">
+        <div class="ct"><div class="mono">${p.ab}</div>
+          <div class="ttl"><a class="name" href="${p.main}" target="_blank" rel="noopener">${hl(p.name)}</a>
+          <div class="host"><i title="Working"></i>${p.host}<span class="area">${AREAS[p.cat]}</span></div></div></div>
+        <p class="desc">${hl(p.desc)}</p>
+        <div class="links">${p.links.map(([t,u,f])=>`<div class="lr"><a href="${u}" target="_blank" rel="noopener"><span class="fmt ${f.toLowerCase()}">${f}</span><span class="t">${hl(t)}</span></a><button class="cp" data-u="${u}" aria-label="Copy link" title="Copy link">${cpIc}</button></div>`).join("")}</div>
+      </article>`).join("")}</div>`;
   }
-  if(!html)html=`<div class="empty">Nothing found for “${esc(q)}”. Try another word, or choose All portals.</div>`;
-  if(area==="all"&&!q)html+=downHTML();
-  m.innerHTML=html;
+  document.getElementById("list").innerHTML=h||`<div class="empty">Nothing found for “${esc(q)}”.</div>`;
 }
-function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),1700)}
-async function copy(t,msg){try{await navigator.clipboard.writeText(t);toast(msg)}catch(e){toast("Copy not allowed here – open the link instead")}}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),1600)}
+async function copy(t,m){try{await navigator.clipboard.writeText(t);toast(m)}catch(e){toast("Copy not allowed here")}}
 
-document.getElementById("side").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;area=b.dataset.a;renderSide();render();if(innerWidth>860)scrollTo({top:document.querySelector(".layout").offsetTop-10,behavior:"smooth"})});
-document.getElementById("main").addEventListener("click",e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.u,"Link copied")});
-document.getElementById("q").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();if(q&&area==="down"){area="all";renderSide()}render()});
-document.addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement.tagName!=="INPUT"){e.preventDefault();document.getElementById("q").focus()}});
-document.getElementById("copyAll").onclick=()=>copy(PORTALS.map(p=>p.name+"\n"+p.links.map(l=>"  "+l[0]+": "+l[1]).join("\n")).join("\n\n"),"All working links copied");
-renderQuick();renderSide();render();
+document.getElementById("quick").innerHTML=`<span class="l">Quick</span>`+QUICK.map(([n,u])=>`<a class="qa" href="${u}" target="_blank" rel="noopener">${n}${arIc}</a>`).join("");
+document.getElementById("down").innerHTML=`<summary><span class="a">▶</span>${DOWN.length} portals not working at last check</summary><div class="dl">${DOWN.map(([n,h,w])=>`<div class="dr"><i></i><b>${n}</b><span>${h}</span><em>– ${w}</em></div>`).join("")}</div>`;
+document.getElementById("bar").addEventListener("click",e=>{
+  const c=e.target.closest(".chip");if(c){area=c.dataset.a;bar();list();return}
+  if(e.target.closest("#copyAll"))copy(PORTALS.map(p=>p.name+"\n"+p.links.map(l=>"  "+l[0]+" ("+l[2]+"): "+l[1]).join("\n")).join("\n\n"),"All links copied");
+});
+document.getElementById("list").addEventListener("click",e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.u,"Link copied")});
+document.getElementById("q").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();list()});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement.tagName!=="INPUT"){e.preventDefault();document.getElementById("q").focus()}if(e.key==="Escape"&&document.activeElement.id==="q"){e.target.value="";q="";list()}});
+bar();list();
 </script>
 </body>
 </html>
